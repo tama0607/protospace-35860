@@ -9,7 +9,7 @@ class User < ApplicationRecord
   validates :occupation, presence:true
   validates :position, presence:true
 
-  belong_to :prototypes
-  belong_to :comments
+  belongs_to :prototypes
+  belongs_to :comments
   
 end
