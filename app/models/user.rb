@@ -10,6 +10,6 @@ class User < ApplicationRecord
   validates :position, presence:true
 
   belongs_to :prototypes
-  belongs_to :comments
+  belongs_to :comments, dependent: :destroy
   
 end
