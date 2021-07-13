@@ -1,5 +1,8 @@
 class PrototypesController < ApplicationController
-  
+  before_action :authenticate_user!, except: [:index, :show]
+  before_action :set_var, only: [:show,:edit,:update,:destroy]
+  before_action :page_permit, only: [:edit, :update, :destroy]
+
   def index
     @prototypes = Prototype.includes(:user)
   end
@@ -18,17 +21,17 @@ class PrototypesController < ApplicationController
   end
 
   def show
-    @prototype = Prototype.find(params[:id])
+    
     @comment = Comment.new
     @comments = @prototype.comments
   end
 
   def edit
-    @prototype = Prototype.find(params[:id])
+    
   end
 
   def update
-    @prototype = Prototype.find(params[:id])
+    
     if @prototype.update(prototype_form)
       redirect_to prototype_path(@prototype)
     else
@@ -37,7 +40,7 @@ class PrototypesController < ApplicationController
   end
 
   def destroy
-    @prototype = Prototype.find(params[:id])
+    
     if @prototype.destroy
       redirect_to root_path
     else
@@ -48,5 +51,13 @@ class PrototypesController < ApplicationController
   private
   def prototype_form
     params.require(:prototype).permit(:title, :catch_copy, :concept, :image).merge(user_id: current_user.id)
+  end
+
+  def set_var
+    @prototype = Prototype.find(params[:id])
+  end
+
+  def page_permit
+    redirect_to root_path unless current_user == @prototype.user
   end
 end

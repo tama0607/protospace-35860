@@ -9,7 +9,8 @@ class User < ApplicationRecord
   validates :occupation, presence:true
   validates :position, presence:true
 
-  belongs_to :prototypes
-  belongs_to :comments, dependent: :destroy
+  has_many :prototypes
+  has_many :comments
+
   
 end
