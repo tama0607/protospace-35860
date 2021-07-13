@@ -3,7 +3,6 @@ class PrototypesController < ApplicationController
   before_action :set_var, only: [:show,:edit,:update,:destroy]
   before_action :page_permit, only: [:edit, :update, :destroy]
   
-
   def index
     @prototypes = Prototype.includes(:user)
   end
